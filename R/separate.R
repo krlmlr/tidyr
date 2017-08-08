@@ -61,14 +61,14 @@ separate.default <- function(data, col, into, sep = "[^[:alnum:]]+",
                              extra = "warn", fill = "warn", ...) {
   col <- compat_as_lazy(enquo(col))
   separate_(data,
-    col = col,
-    into = into,
-    sep = sep,
-    remove = remove,
-    convert = convert,
-    extra = extra,
-    fill = fill,
-    ...
+            col = col,
+            into = into,
+            sep = sep,
+            remove = remove,
+            convert = convert,
+            extra = extra,
+            fill = fill,
+            ...
   )
 }
 #' @export
@@ -77,7 +77,7 @@ separate.data.frame <- function(data, col, into, sep = "[^[:alnum:]]+",
                                 extra = "warn", fill = "warn", ...) {
   orig <- data
 
-  var <- tidyselect::vars_pull(names(data), !! enquo(col))
+  var <- tidyselect::vars_pull(names(data), !!enquo(col))
   value <- as.character(data[[var]])
 
   if (length(list(...)) != 0) {
@@ -111,13 +111,13 @@ strsep <- function(x, sep) {
 
   nchar <- stringi::stri_length(x)
   pos <- map(sep, function(i) {
-    if (i >= 0) return(i)
-    nchar + i + 1
-  })
+             if (i >= 0) return(i)
+             nchar + i + 1
+           })
 
   map(1:(length(pos) - 1), function(i) {
-    stringi::stri_sub(x, pos[[i]] + 1, pos[[i + 1]])
-  })
+      stringi::stri_sub(x, pos[[i]] + 1, pos[[i + 1]])
+    })
 }
 str_split_fixed <- function(value, sep, n, extra = "warn", fill = "warn") {
   if (extra == "error") {
@@ -165,13 +165,13 @@ separate_.data.frame <- function(data, col, into, sep = "[^[:alnum:]]+",
                                  extra = "warn", fill = "warn", ...) {
   col <- compat_lazy(col, caller_env())
   separate(data,
-    col = !! col,
-    into = into,
-    sep = sep,
-    remove = remove,
-    convert = convert,
-    extra = extra,
-    fill = fill,
-    ...
+           col = !!col,
+           into = into,
+           sep = sep,
+           remove = remove,
+           convert = convert,
+           extra = extra,
+           fill = fill,
+           ...
   )
 }

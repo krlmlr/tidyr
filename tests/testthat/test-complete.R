@@ -8,7 +8,8 @@ test_that("basic invocation works", {
 })
 
 test_that("preserves grouping", {
-  df <- tibble(x = 1:2, y = 1:2, z = 3:4) %>% dplyr::group_by(x)
+  df <- tibble(x = 1:2, y = 1:2, z = 3:4) %>%
+    dplyr::group_by(x)
   out <- complete(df, x, y)
   expect_s3_class(out, "grouped_df")
   expect_equal(dplyr::groups(out), dplyr::groups(df))

@@ -35,7 +35,7 @@ separate_rows.data.frame <- function(data, ..., sep = "[^[:alnum:].]+",
   vars <- unname(tidyselect::vars_select(names(data), ...))
 
   data[vars] <- map(data[vars], stringi::stri_split_regex, sep)
-  data <- unnest(data, !!! syms(vars))
+  data <- unnest(data, !!!syms(vars))
 
   if (convert) {
     data[vars] <- map(data[vars], type.convert, as.is = TRUE)
@@ -55,5 +55,5 @@ separate_rows_ <- function(data, cols, sep = "[^[:alnum:].]+",
 separate_rows_.data.frame <- function(data, cols, sep = "[^[:alnum:].]+",
                                       convert = FALSE) {
   cols <- compat_lazy_dots(cols, caller_env())
-  separate_rows(data, !!! cols, sep = sep, convert = convert)
+  separate_rows(data, !!!cols, sep = sep, convert = convert)
 }

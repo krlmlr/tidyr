@@ -64,12 +64,12 @@ gather.default <- function(data, key = "key", value = "value", ...,
                            na.rm = FALSE, convert = FALSE,
                            factor_key = FALSE) {
   gather_(data,
-    key_col = compat_as_lazy(enquo(key)),
-    value_col = compat_as_lazy(enquo(value)),
-    ...,
-    na.rm = na.rm,
-    convert = convert,
-    factor_key = factor_key
+          key_col = compat_as_lazy(enquo(key)),
+          value_col = compat_as_lazy(enquo(value)),
+          ...,
+          na.rm = na.rm,
+          convert = convert,
+          factor_key = factor_key
   )
 }
 #' @export
@@ -83,7 +83,7 @@ gather.data.frame <- function(data, key = "key", value = "value", ...,
   if (is_empty(quos)) {
     gather_vars <- setdiff(names(data), c(key_var, value_var))
   } else {
-    gather_vars <- unname(tidyselect::vars_select(names(data), !!! quos))
+    gather_vars <- unname(tidyselect::vars_select(names(data), !!!quos))
   }
   if (is_empty(gather_vars)) {
     return(data)
@@ -101,14 +101,14 @@ gather.data.frame <- function(data, key = "key", value = "value", ...,
   valueAsFactor <- "factor" %in% class(args$attr_template)
 
   out <- melt_dataframe(data,
-    id_idx - 1L,
-    gather_idx - 1L,
-    as.character(key_var),
-    as.character(value_var),
-    args$attr_template,
-    args$factorsAsStrings,
-    as.logical(valueAsFactor),
-    as.logical(factor_key)
+                        id_idx - 1L,
+                        gather_idx - 1L,
+                        as.character(key_var),
+                        as.character(value_var),
+                        args$attr_template,
+                        args$factorsAsStrings,
+                        as.logical(valueAsFactor),
+                        as.logical(factor_key)
   )
 
   if (na.rm && anyNA(out)) {
@@ -127,10 +127,9 @@ gather.data.frame <- function(data, key = "key", value = "value", ...,
 
 ## Get the attributes if common, NULL if not.
 normalize_melt_arguments <- function(data, measure.ind, factorsAsStrings) {
-
   measure.attributes <- map(measure.ind, function(i) {
-    attributes(data[[i]])
-  })
+                            attributes(data[[i]])
+                          })
 
   ## Determine if all measure.attributes are equal
   measure.attrs.equal <- all_identical(measure.attributes)
@@ -193,11 +192,11 @@ gather_.data.frame <- function(data, key_col, value_col, gather_cols,
   gather_cols <- compat_lazy_dots(gather_cols, caller_env())
 
   gather(data,
-    key = !! key_col,
-    value = !! value_col,
-    !!! gather_cols,
-    na.rm = na.rm,
-    convert = convert,
-    factor_key = factor_key
+         key = !!key_col,
+         value = !!value_col,
+         !!!gather_cols,
+         na.rm = na.rm,
+         convert = convert,
+         factor_key = factor_key
   )
 }

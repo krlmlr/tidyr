@@ -12,7 +12,7 @@ test_that("multiple variables in one arg doesn't expand", {
   expect_equal(nrow(out), 2)
 })
 
-test_that("nesting doesn't expand values" ,{
+test_that("nesting doesn't expand values", {
   df <- data.frame(x = 1:2, y = 1:2)
   expect_equal(expand(df, nesting(x, y)), df)
 })
@@ -34,7 +34,10 @@ test_that("expand respects groups", {
     b = c(1L, 2L, 1L),
     c = c(2L, 1L, 1L)
   )
-  out <- df %>% dplyr::group_by(a) %>% expand(b, c) %>% nest()
+  out <- df %>%
+    dplyr::group_by(a) %>%
+    expand(b, c) %>%
+    nest()
 
   expect_equal(out$data[[1]], crossing(b = 1:2, c = 1:2))
   expect_equal(out$data[[2]], tibble(b = 1L, c = 1L))

@@ -33,7 +33,8 @@ test_that("expand_()", {
 
 test_that("extract_()", {
   df <- data.frame(x = c("a.b", "a.d", "b.c"))
-  out <- df %>% extract_("x", "A")
+  out <- df %>%
+    extract_("x", "A")
   expect_identical(out$A, c("a", "a", "b"))
 })
 
@@ -74,7 +75,9 @@ test_that("spread_()", {
   df1 <- data.frame(x = c("a", "b"), y = 1:2)
   df2 <- data.frame(x = c("b", "a"), y = 2:1)
   one <- spread_(df1, "x", ~y)
-  two <- spread_(df2, "x", ~y) %>% select(a, b) %>% arrange(a, b)
+  two <- spread_(df2, "x", ~y) %>%
+    select(a, b) %>%
+    arrange(a, b)
   expect_identical(one, two)
 })
 

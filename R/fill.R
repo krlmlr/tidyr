@@ -56,5 +56,5 @@ fill_ <- function(data, fill_cols, .direction = c("down", "up")) {
 #' @export
 fill_.data.frame <- function(data, fill_cols, .direction = c("down", "up")) {
   vars <- compat_lazy_dots(fill_cols, caller_env())
-  fill(data, !!! vars, .direction = .direction)
+  fill(data, !!!vars, .direction = .direction)
 }

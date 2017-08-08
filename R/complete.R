@@ -53,5 +53,5 @@ complete_ <- function(data, cols, fill = list(), ...) {
 #' @export
 complete_.data.frame <- function(data, cols, fill = list(), ...) {
   cols <- compat_lazy_dots(cols, caller_env())
-  complete(data, !!! cols, fill = fill)
+  complete(data, !!!cols, fill = fill)
 }
