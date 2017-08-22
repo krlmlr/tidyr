@@ -25,27 +25,27 @@ compat_lazy <- function(lazy, env = caller_env(), warn = TRUE) {
   }
 
   coerce_type(lazy, "a quosure",
-    formula = as_quosure(lazy, env),
-    symbol = ,
-    language = new_quosure(lazy, env),
-    string = ,
-    character = {
+              formula = as_quosure(lazy, env),
+              symbol =,
+              language = new_quosure(lazy, env),
+              string =,
+              character = {
       if (warn) warn_text_se()
       parse_quosure(lazy[[1]], env)
     },
-    logical = ,
-    integer = ,
-    double = {
+              logical =,
+              integer =,
+              double = {
       if (length(lazy) > 1) {
         warn("Truncating vector to length 1")
         lazy <- lazy[[1]]
       }
       new_quosure(lazy, env)
     },
-    list =
-      coerce_class(lazy, "a quosure",
-        lazy = new_quosure(lazy$expr, lazy$env)
-      )
+              list =
+                coerce_class(lazy, "a quosure",
+                             lazy = new_quosure(lazy$expr, lazy$env)
+                )
   )
 }
 

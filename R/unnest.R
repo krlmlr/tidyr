@@ -82,7 +82,7 @@ unnest.data.frame <- function(data, ..., .drop = NA, .id = NULL,
     quos <- syms(list_cols)
   }
 
-  nested <- dplyr::transmute(dplyr::ungroup(data), !!! quos)
+  nested <- dplyr::transmute(dplyr::ungroup(data), !!!quos)
   n <- map(nested, function(x) map_int(x, NROW))
   if (length(unique(n)) != 1) {
     abort("All nested columns must have the same number of elements.")
@@ -106,9 +106,9 @@ unnest.data.frame <- function(data, ..., .drop = NA, .id = NULL,
   unnested_dataframe <- map(nest_types$dataframe %||% list(), dplyr::bind_rows, .id = .id)
   if (!is_null(.sep)) {
     unnested_dataframe <- imap(unnested_dataframe,
-      function(df, name) {
-        set_names(df, paste(name, names(df), sep = .sep))
-      })
+                               function(df, name) {
+                                 set_names(df, paste(name, names(df), sep = .sep))
+                               })
   }
   if (length(unnested_dataframe) > 0)
     unnested_dataframe <- dplyr::bind_cols(unnested_dataframe)
@@ -178,5 +178,5 @@ unnest_ <- function(data, unnest_cols, .drop = NA, .id = NULL, .sep = NULL) {
 unnest_.data.frame <- function(data, unnest_cols, .drop = NA, .id = NULL,
                                .sep = NULL) {
   unnest_cols <- compat_lazy_dots(unnest_cols, caller_env())
-  unnest(data, !!! unnest_cols, .drop = .drop, .id = .id, .sep = .sep)
+  unnest(data, !!!unnest_cols, .drop = .drop, .id = .id, .sep = .sep)
 }

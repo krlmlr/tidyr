@@ -92,14 +92,14 @@ expand.data.frame <- function(data, ...) {
   }
 
   pieces <- map(dots, eval_tidy, data)
-  df <- crossing(!!! pieces)
+  df <- crossing(!!!pieces)
 
   reconstruct_tibble(data, df)
 }
 #' @export
 expand.grouped_df <- function(data, ...) {
   dots <- quos(...)
-  dplyr::do(data, expand(., !!! dots))
+  dplyr::do(data, expand(., !!!dots))
 }
 
 #' @rdname deprecated-se
@@ -111,7 +111,7 @@ expand_ <- function(data, dots, ...) {
 #' @export
 expand_.data.frame <- function(data, dots, ...) {
   dots <- compat_lazy_dots(dots, caller_env())
-  expand(data, !!! dots)
+  expand(data, !!!dots)
 }
 
 
@@ -135,7 +135,6 @@ crossing <- function(...) {
       "Each element must be either an atomic vector or a data frame.
        Problems: {problems}."
     ))
-
   }
 
   # turn each atomic vector into single column data frame
@@ -148,7 +147,7 @@ crossing <- function(...) {
 cross_df <- function(x, y) {
   x_idx <- rep(seq_len(nrow(x)), each = nrow(y))
   y_idx <- rep(seq_len(nrow(y)), nrow(x))
-  dplyr::bind_cols(x[x_idx, , drop = FALSE], y[y_idx, , drop = FALSE])
+  dplyr::bind_cols(x[x_idx,, drop = FALSE], y[y_idx,, drop = FALSE])
 }
 drop_empty <- function(x) {
   empty <- map_lgl(x, function(x) length(x) == 0)
@@ -165,7 +164,7 @@ nesting <- function(...) {
 
   df <- as_tibble(x)
   df <- dplyr::distinct(df)
-  df[do.call(order, df), , drop = FALSE]
+  df[do.call(order, df),, drop = FALSE]
 }
 
 
@@ -174,11 +173,11 @@ nesting <- function(...) {
 #' @export
 crossing_ <- function(x) {
   x <- compat_lazy_dots(x, caller_env())
-  crossing(!!! x)
+  crossing(!!!x)
 }
 #' @rdname deprecated-se
 #' @export
 nesting_ <- function(x) {
   x <- compat_lazy_dots(x, caller_env())
-  nesting(!!! x)
+  nesting(!!!x)
 }

@@ -38,7 +38,7 @@ test_that("multiple columns must be same length", {
 })
 
 test_that("nested is split as a list (#84)", {
-  df <- tibble(x = 1:3, y = list(1,2:3,4), z = list(5,6:7,8))
+  df <- tibble(x = 1:3, y = list(1, 2:3, 4), z = list(5, 6:7, 8))
   expect_warning(out <- unnest(df, y, z), NA)
   expect_equal(out$x, c(1, 2, 2, 3))
   expect_equal(out$y, unlist(df$y))
@@ -46,8 +46,9 @@ test_that("nested is split as a list (#84)", {
 })
 
 test_that("unnest has mutate semantics", {
-  df <- tibble(x = 1:3, y = list(1,2:3,4))
-  out <- df %>% unnest(z = map(y, `+`, 1))
+  df <- tibble(x = 1:3, y = list(1, 2:3, 4))
+  out <- df %>%
+    unnest(z = map(y, `+`, 1))
 
   expect_equal(out$z, 2:5)
 })
@@ -89,7 +90,8 @@ test_that(".id creates vector of names for grouped data frame unnest", {
 })
 
 test_that("can use non-syntactic names", {
-  out <- tibble("foo bar" = list(1:2, 3)) %>% unnest()
+  out <- tibble("foo bar" = list(1:2, 3)) %>%
+    unnest()
 
   expect_named(out, "foo bar")
 })
@@ -105,14 +107,16 @@ test_that("sep combines column names", {
 
 test_that("unnest drops list cols if expanding", {
   df <- tibble(x = 1:2, y = list(3, 4), z = list(5, 6:7))
-  out <- df %>% unnest(z)
+  out <- df %>%
+    unnest(z)
 
   expect_equal(names(out), c("x", "z"))
 })
 
 test_that("unnest keeps list cols if not expanding", {
   df <- tibble(x = 1:2, y = list(3, 4), z = list(5, 6:7))
-  out <- df %>% unnest(y)
+  out <- df %>%
+    unnest(y)
 
   expect_equal(names(out), c("x", "z", "y"))
 })
@@ -120,14 +124,19 @@ test_that("unnest keeps list cols if not expanding", {
 test_that("unnest respects .drop_lists", {
   df <- tibble(x = 1:2, y = list(3, 4), z = list(5, 6:7))
 
-  expect_equal(df %>% unnest(y, .drop = TRUE) %>% names(), c("x", "y"))
-  expect_equal(df %>% unnest(z, .drop = FALSE) %>% names(), c("x", "y", "z"))
-
+  expect_equal(df %>%
+               unnest(y, .drop = TRUE) %>%
+               names(), c("x", "y"))
+  expect_equal(df %>%
+               unnest(z, .drop = FALSE) %>%
+               names(), c("x", "y", "z"))
 })
 
 test_that("grouping is preserved", {
-  df <- tibble(g = 1, x = list(1:3)) %>% dplyr::group_by(g)
-  rs <- df %>% unnest(x)
+  df <- tibble(g = 1, x = list(1:3)) %>%
+    dplyr::group_by(g)
+  rs <- df %>%
+    unnest(x)
 
   expect_equal(rs$x, 1:3)
   expect_equal(class(df), class(rs))

@@ -46,7 +46,10 @@ test_that("key preserves column ordering when factor_key = TRUE", {
 
 test_that("preserve class of input", {
   dat <- data.frame(x = 1:2)
-  dat %>% as_tibble %>% gather %>% expect_is("tbl_df")
+  dat %>%
+    as_tibble() %>%
+    gather() %>%
+    expect_is("tbl_df")
 })
 
 test_that("additional inputs control which columns to gather", {
@@ -60,11 +63,15 @@ test_that("group_vars are kept where possible", {
   df <- tibble(x = 1, y = 1, z = 1)
 
   # Can't keep
-  out <- df %>% dplyr::group_by(x) %>% gather(key, val, x:z)
+  out <- df %>%
+    dplyr::group_by(x) %>%
+    gather(key, val, x:z)
   expect_equal(out, tibble(key = c("x", "y", "z"), val = 1))
 
   # Can keep
-  out <- df %>% dplyr::group_by(x) %>% gather(key, val, y:z)
+  out <- df %>%
+    dplyr::group_by(x) %>%
+    gather(key, val, y:z)
   expect_equal(dplyr::groups(out), list(quote(x)))
 })
 
@@ -84,7 +91,7 @@ test_that("factors coerced to characters, not integers", {
   )
 
   expect_warning(out <- gather(df, k, v),
-    "attributes are not identical across measure variables")
+                 "attributes are not identical across measure variables")
 
   expect_equal(out$v, c(1:3, letters[1:3]))
 })
@@ -110,7 +117,7 @@ test_that("varying attributes are dropped with a warning", {
     date2 = Sys.Date() + 10
   )
   expect_warning(gather(df, k, v),
-    "attributes are not identical across measure variables")
+                 "attributes are not identical across measure variables")
 })
 
 test_that("gather preserves OBJECT bit on e.g. POSIXct", {

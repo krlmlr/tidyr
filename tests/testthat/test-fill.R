@@ -74,6 +74,8 @@ test_that("fill preserves attributes", {
 
 test_that("fill respects grouping", {
   df <- tibble(x = c(1, 1, 2), y = c(1, NA, NA))
-  out <- df %>% dplyr::group_by(x) %>% fill(y)
+  out <- df %>%
+    dplyr::group_by(x) %>%
+    fill(y)
   expect_equal(out$y, c(1, 1, NA))
 })

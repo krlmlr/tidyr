@@ -36,18 +36,18 @@ extract <- function(data, col, into, regex = "([[:alnum:]]+)",
 extract.default <- function(data, col, into, regex = "([[:alnum:]]+)",
                             remove = TRUE, convert = FALSE, ...) {
   extract_(data,
-    col = compat_as_lazy(enquo(col)),
-    into = into,
-    regex = regex,
-    remove = remove,
-    convert = convert,
-    ...
+           col = compat_as_lazy(enquo(col)),
+           into = into,
+           regex = regex,
+           remove = remove,
+           convert = convert,
+           ...
   )
 }
 #' @export
 extract.data.frame <- function(data, col, into, regex = "([[:alnum:]]+)",
                                remove = TRUE, convert = FALSE, ...) {
-  var <- tidyselect::vars_pull(names(data), !! enquo(col))
+  var <- tidyselect::vars_pull(names(data), !!enquo(col))
   stopifnot(
     is_string(regex),
     is_character(into)
@@ -79,7 +79,7 @@ extract.data.frame <- function(data, col, into, regex = "([[:alnum:]]+)",
 #' @inheritParams extract
 #' @export
 extract_ <- function(data, col, into, regex = "([[:alnum:]]+)", remove = TRUE,
-                      convert = FALSE, ...) {
+                     convert = FALSE, ...) {
   UseMethod("extract_")
 }
 #' @export
@@ -87,11 +87,11 @@ extract_.data.frame <- function(data, col, into, regex = "([[:alnum:]]+)",
                                 remove = TRUE, convert = FALSE, ...) {
   col <- compat_lazy(col, caller_env())
   extract(data,
-    col = !! col,
-    into = into,
-    regex = regex,
-    remove = remove,
-    convert = convert,
-    ...
+          col = !!col,
+          into = into,
+          regex = regex,
+          remove = remove,
+          convert = convert,
+          ...
   )
 }

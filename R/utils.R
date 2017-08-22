@@ -2,10 +2,10 @@
 col_name <- function(x, default = abort("Please supply column name")) {
   if (identical(x, quote(expr = ))) return(default)
   switch_type(x,
-    NULL = NULL,
-    string = x,
-    symbol = as_string(x),
-    abort("Invalid column specification")
+              NULL = NULL,
+              string = x,
+              symbol = as_string(x),
+              abort("Invalid column specification")
   )
 }
 

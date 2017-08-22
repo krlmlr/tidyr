@@ -55,19 +55,19 @@ spread.default <- function(data, key, value, fill = NA, convert = FALSE,
   key <- compat_as_lazy(enquo(key))
   value <- compat_as_lazy(enquo(value))
   spread_(data,
-    key_col = key,
-    value_col = value,
-    fill = fill,
-    convert = convert,
-    drop = drop,
-    sep = sep
+          key_col = key,
+          value_col = value,
+          fill = fill,
+          convert = convert,
+          drop = drop,
+          sep = sep
   )
 }
 #' @export
 spread.data.frame <- function(data, key, value, fill = NA, convert = FALSE,
                               drop = TRUE, sep = NULL) {
-  key_var <- tidyselect::vars_pull(names(data), !! enquo(key))
-  value_var <- tidyselect::vars_pull(names(data), !! enquo(value))
+  key_var <- tidyselect::vars_pull(names(data), !!enquo(key))
+  value_var <- tidyselect::vars_pull(names(data), !!enquo(value))
 
   col <- data[key_var]
   col_id <- id(col, drop = drop)
@@ -145,7 +145,7 @@ split_labels <- function(df, id, drop = TRUE) {
 
   if (drop) {
     representative <- match(sort(unique(id)), id)
-    df[representative, , drop = FALSE]
+    df[representative,, drop = FALSE]
   } else {
     unique_values <- map(df, ulevels)
     rev(expand.grid(rev(unique_values), stringsAsFactors = FALSE))
@@ -177,11 +177,11 @@ spread_.data.frame <- function(data, key_col, value_col, fill = NA,
   value_col <- compat_lazy(value_col, caller_env())
 
   spread(data,
-    key = !! key_col,
-    value = !! value_col,
-    fill = fill,
-    convert = convert,
-    drop = drop,
-    sep = sep
+         key = !!key_col,
+         value = !!value_col,
+         fill = fill,
+         convert = convert,
+         drop = drop,
+         sep = sep
   )
 }

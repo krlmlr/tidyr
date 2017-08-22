@@ -44,5 +44,5 @@ drop_na_ <- function(data, vars) {
 #' @export
 drop_na_.data.frame <- function(data, vars) {
   vars <- compat_lazy_dots(vars, caller_env())
-  drop_na(data, !!! vars)
+  drop_na(data, !!!vars)
 }

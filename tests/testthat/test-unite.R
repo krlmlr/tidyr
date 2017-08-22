@@ -15,16 +15,20 @@ test_that("unite does not remove new col in case of name clash", {
 })
 
 test_that("unite preserves grouping", {
-  df <- tibble(g = 1, x = "a") %>% dplyr::group_by(g)
-  rs <- df %>% unite(x, x)
+  df <- tibble(g = 1, x = "a") %>%
+    dplyr::group_by(g)
+  rs <- df %>%
+    unite(x, x)
   expect_equal(df, rs)
   expect_equal(class(df), class(rs))
   expect_equal(dplyr::groups(df), dplyr::groups(rs))
 })
 
 test_that("drops grouping when needed", {
-  df <- tibble(g = 1, x = "a") %>% dplyr::group_by(g)
-  rs <- df %>% unite(gx, g, x)
+  df <- tibble(g = 1, x = "a") %>%
+    dplyr::group_by(g)
+  rs <- df %>%
+    unite(gx, g, x)
   expect_equal(rs$gx, "1_a")
   expect_equal(dplyr::groups(rs), NULL)
 })
